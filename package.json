@@ -8,11 +8,9 @@
         "Bjorn Stromberg <bjorn@bjornstar.com> (https://bjornstar.com)"
     ],
     "engines": {
-        "node": ">=18"
+        "node": ">=20"
     },
-    "bin": {
-        "node-dev": "bin/node-dev.js"
-    },
+    "bin": "bin/node-dev.js",
     "files": [
         "lib"
     ],
@@ -28,7 +26,7 @@
     },
     "devDependencies": {
         "@stylistic/eslint-plugin": "^5.8.0",
-        "@types/node": "^18.0.0",
+        "@types/node": "^20.0.0",
         "@typescript-eslint/eslint-plugin": "^8.55.0",
         "eslint": "<10.0.0",
         "eslint-plugin-import": "^2.32.0",
