@@ -1,3 +1,3 @@
-import { join } from 'path';
+import { join } from 'path'
 
-console.log(join('hello', 'world'));
+console.log(join('hello', 'world'))

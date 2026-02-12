@@ -1,13 +1,13 @@
-const tap = require('tap');
+const tap = require('tap')
 
-const { spawn } = require('../utils');
+const { spawn } = require('../utils')
 
 tap.test('should watch if no such module', t => {
-  let passed = false;
-  spawn('no-such-module.js', out => {
-    if (!passed && out.match(/ERROR/)) {
-      passed = true;
-      return { exit: t.end.bind(t) };
-    }
-  });
-});
+    let passed = false
+    spawn('no-such-module.js', out => {
+        if (!passed && out.match(/ERROR/)) {
+            passed = true
+            return { exit: t.end.bind(t) }
+        }
+    })
+})

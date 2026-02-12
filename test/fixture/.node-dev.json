@@ -1,7 +1,9 @@
 {
-  "notify": false,
-  "ignore": ["./ignored-module.js"],
-  "extensions": {
-    "ts": "ts-node/register"
-  }
+    "notify": false,
+    "ignore": [
+        "./ignored-module.js"
+    ],
+    "extensions": {
+        "ts": "ts-node-maintained/register"
+    }
 }

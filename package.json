@@ -1,61 +1,78 @@
 {
-  "name": "node-dev",
-  "version": "8.0.0",
-  "description": "Restarts your app when files are modified",
-  "keywords": [
-    "restart",
-    "reload",
-    "supervisor",
-    "monitor",
-    "watch"
-  ],
-  "author": "Felix Gnass <fgnass@gmail.com> (https://github.com/fgnass)",
-  "contributors": [
-    "Daniel Gasienica <daniel@gasienica.ch> (https://github.com/gasi)",
-    "Bjorn Stromberg <bjorn@bjornstar.com> (https://bjornstar.com)"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/fgnass/node-dev.git"
-  },
-  "license": "MIT",
-  "bin": {
-    "node-dev": "bin/node-dev"
-  },
-  "main": "./lib",
-  "engines": {
-    "node": ">=14"
-  },
-  "scripts": {
-    "lint": "eslint lib test bin/node-dev",
-    "test": "node test",
-    "prepare": "husky install"
-  },
-  "dependencies": {
-    "dateformat": "^3.0.3",
-    "dynamic-dedupe": "^0.3.0",
-    "filewatcher": "~3.0.0",
-    "get-package-type": "^0.1.0",
-    "minimist": "^1.2.6",
-    "node-notifier": "^8.0.1",
-    "resolve": "^1.22.0",
-    "semver": "^7.3.7"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.18",
-    "eslint": "^8.30.0",
-    "eslint-plugin-import": "^2.26.0",
-    "husky": "^8.0.2",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.6.2",
-    "tap": "^16.3.2",
-    "tap-xunit": "^2.4.1",
-    "touch": "^3.1.0",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
-  },
-  "lint-staged": {
-    "*.{js,mjs}": "eslint --cache --fix",
-    "*.{js,md}": "prettier --write"
-  }
+    "name": "@liquid-js/node-dev",
+    "version": "8.0.0",
+    "description": "Restarts your app when files are modified",
+    "main": "./lib",
+    "contributors": [
+        "Daniel Gasienica <daniel@gasienica.ch> (https://github.com/gasi)",
+        "Bjorn Stromberg <bjorn@bjornstar.com> (https://bjornstar.com)"
+    ],
+    "bin": "bin/node-dev",
+    "engines": {
+        "node": ">=18"
+    },
+    "files": [
+        "lib"
+    ],
+    "dependencies": {
+        "dateformat": "^5.0.3",
+        "dynamic-dedupe": "^0.3.0",
+        "filewatcher": "^3.0.1",
+        "get-package-type": "^0.1.0",
+        "minimist": "^1.2.8",
+        "node-notifier": "^10.0.1",
+        "resolve": "^1.22.11",
+        "semver": "^7.7.4"
+    },
+    "devDependencies": {
+        "@stylistic/eslint-plugin": "^5.8.0",
+        "@types/node": "^18.0.0",
+        "@typescript-eslint/eslint-plugin": "^8.55.0",
+        "eslint": "<10.0.0",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-jsdoc": "^62.5.4",
+        "eslint-plugin-prefer-arrow-functions": "^3.9.1",
+        "eslint-plugin-unused-imports": "^4.4.1",
+        "husky": "^9.1.7",
+        "npm-check-updates": "^19.3.2",
+        "tap": "^21.5.1",
+        "tap-xunit": "^2.4.1",
+        "touch": "^3.1.1",
+        "ts-node-maintained": "^10.9.6",
+        "typescript": "<5.0.0",
+        "typescript-eslint": "^8.55.0"
+    },
+    "scripts": {
+        "test": "node test",
+        "lint": "eslint . --fix",
+        "prepare": "husky",
+        "release": "git diff --exit-code && commit-and-tag-version && git push --follow-tags origin",
+        "prepack": "clean-package",
+        "postpack": "clean-package restore"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Liquid-JS/node-dev.git"
+    },
+    "keywords": [
+        "restart",
+        "reload",
+        "supervisor",
+        "monitor",
+        "watch"
+    ],
+    "author": "Felix Gnass <fgnass@gmail.com> (https://github.com/fgnass)",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Liquid-JS/node-dev/issues"
+    },
+    "packageManager": "yarn@4.12.0",
+    "clean-package": {
+        "remove": [
+            "packageManager",
+            "scripts",
+            "devDependencies",
+            "clean-package"
+        ]
+    }
 }

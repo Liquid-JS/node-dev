@@ -1,4 +1,3 @@
-require('./message');
+require('./message')
 
-/* eslint-disable no-undef */
-intentionally_undefined();
+intentionally_undefined()

@@ -1,6 +1,6 @@
-import message from './message.js';
+import message from './message.js'
 
-console.log(message);
+console.log(message)
 
 // So it doesn't immediately exit.
-setTimeout(() => {}, 10000);
+setTimeout(() => {}, 10000)

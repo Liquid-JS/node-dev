@@ -1,1 +1,1 @@
-export default 'Please touch message.ts now';
+export default 'Please touch message.ts now'

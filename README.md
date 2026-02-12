@@ -15,39 +15,35 @@ This also means that you **don't have to** configure any file extensions. Just r
 
 Just run `node-dev` as you would normally run `node`:
 
-```
-node-dev server.js
-```
+    node-dev server.js
 
 ## TypeScript support
 
-You can use node-dev to watch and restart TypeScript projects. Install [ts-node](https://www.npmjs.com/package/ts-node) as dev-dependency, then use node-dev to run your script:
+You can use node-dev to watch and restart TypeScript projects. Install [ts-node-maintained](https://www.npmjs.com/package/ts-node-maintained) as dev-dependency, then use node-dev to run your script:
 
-```
-node-dev src/server.ts
-```
+    node-dev src/server.ts
 
 ## Command-line options
 
 There are a couple of command-line options that can be used to control which files are watched and what happens when they change:
 
-- `--clear` - Clear the screen on restart
-- `--debounce` - Debounce change events by time in milliseconds (non-polling mode, default: 10)
-- `--dedupe` - [Dedupe dynamically](https://www.npmjs.org/package/dynamic-dedupe)
-- `--deps`:
-  - `-1` - Watch the whole dependency tree
-  - `0` - Watch only the project's own files and linked modules (via `npm link`)
-  - `1` (_Default_) - Watch all first level dependencies
-  - `<number> ` - Number of levels to watch
-- `--fork` - Hook into child_process.fork
-- `--graceful_ipc <msg>` - Send 'msg' as an IPC message instead of SIGTERM for restart/shutdown
-- `--ignore` - A file whose changes should not cause a restart
-- `--interval` - Polling interval in milliseconds (default: 1000)
-- `--notify=false` - Disable desktop notifications
-- `--poll` - Force polling for file changes (Caution! CPU-heavy!)
-- `--respawn` - Keep watching for changes after the script has exited
-- `--timestamp` - The timestamp format to use for logging restarts
-- `--vm` - Load files using Node's VM
+-   `--clear` - Clear the screen on restart
+-   `--debounce` - Debounce change events by time in milliseconds (non-polling mode, default: 10)
+-   `--dedupe` - [Dedupe dynamically](https://www.npmjs.org/package/dynamic-dedupe)
+-   `--deps`:
+    -   `-1` - Watch the whole dependency tree
+    -   `0` - Watch only the project's own files and linked modules (via `npm link`)
+    -   `1` (_Default_) - Watch all first level dependencies
+    -   `<number> ` - Number of levels to watch
+-   `--fork` - Hook into child_process.fork
+-   `--graceful_ipc <msg>` - Send 'msg' as an IPC message instead of SIGTERM for restart/shutdown
+-   `--ignore` - A file whose changes should not cause a restart
+-   `--interval` - Polling interval in milliseconds (default: 1000)
+-   `--notify=false` - Disable desktop notifications
+-   `--poll` - Force polling for file changes (Caution! CPU-heavy!)
+-   `--respawn` - Keep watching for changes after the script has exited
+-   `--timestamp` - The timestamp format to use for logging restarts
+-   `--vm` - Load files using Node's VM
 
 ## Passing arguments to node
 
@@ -61,9 +57,7 @@ Please note: you may need to separate your script from other command line option
 
 `node-dev` can be installed via `npm`. Installing it with the `-g` option will allow you to use it anywhere you would use `node`.
 
-```
-npm install -g node-dev
-```
+    npm install -g node-dev
 
 ### Desktop Notifications
 
@@ -76,17 +70,17 @@ Status and error messages can be displayed as desktop notification using
 
 **Requirements:**
 
-- Mac OS X: >= 10.8
-- Linux: `notify-osd` or `libnotify-bin` installed (Ubuntu should have this by default)
-- Windows: >= 8, or task bar balloons for Windows < 8
+-   Mac OS X: >= 10.8
+-   Linux: `notify-osd` or `libnotify-bin` installed (Ubuntu should have this by default)
+-   Windows: >= 8, or task bar balloons for Windows &lt; 8
 
 # Config file
 
 Upon startup node-dev looks for a `.node-dev.json` file in the following directories:
 
-- the user's home directory
-- the current working directory
-- the same directory as the script to run
+-   the user's home directory
+-   the current working directory
+-   the same directory as the script to run
 
 Settings found later in the list will overwrite previous options.
 
@@ -94,17 +88,17 @@ Settings found later in the list will overwrite previous options.
 
 Usually node-dev doesn't require any configuration at all, but there are some options you can set to tweak its behaviour:
 
-- `clear` – Whether to clear the screen upon restarts. _Default:_ `false`
-- `dedupe` – Whether modules should by [dynamically deduped](https://www.npmjs.org/package/dynamic-dedupe). _Default:_ `false`
-- `deps` – How many levels of dependencies should be watched. _Default:_ `1`
-- `fork` – Whether to hook into [child_process.fork](http://nodejs.org/docs/latest/api/child_process.html#child_process_child_process_fork_modulepath_args_options) (required for [clustered](http://nodejs.org/docs/latest/api/cluster.html) programs). _Default:_ `true`
-- `graceful_ipc` - Send the argument provided as an IPC message instead of SIGTERM during restart events. _Default:_ `""` (off)
-- `ignore` - A single file or an array of files to ignore. _Default:_ `[]`
-- `notify` – Whether to display desktop notifications. _Default:_ `true`
-- `poll` - Force polling for file changes, this can be CPU-heavy. _Default:_ `false`
-- `respawn` - Keep watching for changes after the script has exited. _Default:_ `false`
-- `timestamp` – The timestamp format to use for logging restarts. _Default:_ `"HH:MM:ss"`
-- `vm` – Whether to watch files loaded via Node's [VM](http://nodejs.org/docs/latest/api/vm.html) module. _Default:_ `true`
+-   `clear` -- Whether to clear the screen upon restarts. _Default:_ `false`
+-   `dedupe` -- Whether modules should by [dynamically deduped](https://www.npmjs.org/package/dynamic-dedupe). _Default:_ `false`
+-   `deps` -- How many levels of dependencies should be watched. _Default:_ `1`
+-   `fork` -- Whether to hook into [child_process.fork](http://nodejs.org/docs/latest/api/child_process.html#child_process_child_process_fork_modulepath_args_options) (required for [clustered](http://nodejs.org/docs/latest/api/cluster.html) programs). _Default:_ `true`
+-   `graceful_ipc` - Send the argument provided as an IPC message instead of SIGTERM during restart events. _Default:_ `""` (off)
+-   `ignore` - A single file or an array of files to ignore. _Default:_ `[]`
+-   `notify` -- Whether to display desktop notifications. _Default:_ `true`
+-   `poll` - Force polling for file changes, this can be CPU-heavy. _Default:_ `false`
+-   `respawn` - Keep watching for changes after the script has exited. _Default:_ `false`
+-   `timestamp` -- The timestamp format to use for logging restarts. _Default:_ `"HH:MM:ss"`
+-   `vm` -- Whether to watch files loaded via Node's [VM](http://nodejs.org/docs/latest/api/vm.html) module. _Default:_ `true`
 
 ### ESModules
 
@@ -112,7 +106,7 @@ When using ESModule syntax and `.mjs` files, `node-dev` will automatically use a
 
 ### Dedupe linked modules
 
-Sometimes you need to make sure that multiple modules get _exactly the same instance_ of a common (peer-) dependency. This can usually be achieved by running `npm dedupe` – however this doesn't work when you try to `npm link` a dependency (which is quite common during development). Therefore `node-dev` provides a `--dedupe` switch that will inject the [dynamic-dedupe](https://www.npmjs.org/package/dynamic-dedupe) module into your app.
+Sometimes you need to make sure that multiple modules get _exactly the same instance_ of a common (peer-) dependency. This can usually be achieved by running `npm dedupe` -- however this doesn't work when you try to `npm link` a dependency (which is quite common during development). Therefore `node-dev` provides a `--dedupe` switch that will inject the [dynamic-dedupe](https://www.npmjs.org/package/dynamic-dedupe) module into your app.
 
 ### Transpilers
 
@@ -124,13 +118,13 @@ There is a config option called `extensions` which maps file extensions to compi
 {
   "coffee": "coffee-script/register",
   "ls": "LiveScript",
-  "ts": "ts-node/register"
+  "ts": "ts-node-maintained/register"
 }
 ```
 
 This means that if you run `node-dev server.ts` node-dev will do a
-`require("ts-node/register")` before running your script. You need
-to have `ts-node` installed as a dependency of your package.
+`require("ts-node-maintained/register")` before running your script. You need
+to have `ts-node-maintained` installed as a dependency of your package.
 
 Options can be passed to a transpiler by providing an object containing `name` and `options` attributes:
 
@@ -163,7 +157,7 @@ process.on('message', function (msg) {
 
 ### Ignore paths
 
-If you’d like to ignore certain paths or files from triggering a restart, list them in the `.node-dev.json` configuration under `"ignore"` like this:
+If you'd like to ignore certain paths or files from triggering a restart, list them in the `.node-dev.json` configuration under `"ignore"` like this:
 
 ```json
 {

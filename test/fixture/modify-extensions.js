@@ -1,3 +1,3 @@
-require.extensions.bogus = undefined;
+require.extensions.bogus = undefined
 
-console.log('extensions modified');
+console.log('extensions modified')
