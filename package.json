@@ -7,9 +7,11 @@
         "Daniel Gasienica <daniel@gasienica.ch> (https://github.com/gasi)",
         "Bjorn Stromberg <bjorn@bjornstar.com> (https://bjornstar.com)"
     ],
-    "bin": "bin/node-dev",
     "engines": {
         "node": ">=18"
+    },
+    "bin": {
+        "node-dev": "bin/node-dev.js"
     },
     "files": [
         "lib"
