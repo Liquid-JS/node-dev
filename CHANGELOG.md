@@ -1,4 +1,21 @@
-# node-dev
+# Changelog
+
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [9.0.0](https://github.com/Liquid-JS/node-dev/compare/v8.0.0...v9.0.0) (2026-02-12)
+
+
+### Features
+
+* lint, updates ([9ab1b96](https://github.com/Liquid-JS/node-dev/commit/9ab1b96caadd7ef418e8679bdaf737863b4acbc1))
+* run tests ([7e797f2](https://github.com/Liquid-JS/node-dev/commit/7e797f2ff0c93806ee377a9df150175d7f1bbb27))
+
+
+### Bug Fixes
+
+* datetimeformat ([8ae33d9](https://github.com/Liquid-JS/node-dev/commit/8ae33d9ee19ba3805feeb1ffb3640d78a30a6890))
+* drop node 18 ([528cc71](https://github.com/Liquid-JS/node-dev/commit/528cc7107154c0e21b94c973197916e3fc741952))
+* limit init ([e9688f3](https://github.com/Liquid-JS/node-dev/commit/e9688f3df3e3d7072364612668c75d4adbdf527e))
 
 ## v8.0.0 / 2022-12-30
 

@@ -1,6 +1,6 @@
 {
     "name": "@liquid-js/node-dev",
-    "version": "8.0.0",
+    "version": "9.0.0",
     "description": "Restarts your app when files are modified",
     "main": "./lib",
     "engines": {
