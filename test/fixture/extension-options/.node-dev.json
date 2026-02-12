@@ -1,10 +1,10 @@
 {
-  "extensions": {
-    "js": {
-      "name": "./extension.js",
-      "options": {
-        "test": true
-      }
+    "extensions": {
+        "js": {
+            "name": "./extension.js",
+            "options": {
+                "test": true
+            }
+        }
     }
-  }
 }

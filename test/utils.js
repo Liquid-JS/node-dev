@@ -4,12 +4,12 @@ const touch = require('touch')
 
 const { control } = require('../lib/clear')
 
-const bin = join(__dirname, '..', 'bin', 'node-dev')
+const bin = join(__dirname, '..', 'lib', 'entrypoint')
 const dir = join(__dirname, 'fixture')
 
 const reClear = new RegExp(control)
 
-const noop = () => {/**/}
+const noop = () => {/**/ }
 
 exports.spawn = (cmd, cb = noop) => {
     const ps = spawn('node', [bin].concat(cmd.split(' ')), { cwd: dir })
@@ -25,7 +25,7 @@ exports.spawn = (cmd, cb = noop) => {
     }
 
     function outHandler(data) {
-    // Don't log clear
+        // Don't log clear
         console.log(data.toString().replace(reClear, ''))
 
         const ret = cb.call(ps, data.toString())

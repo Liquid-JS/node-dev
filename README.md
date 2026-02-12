@@ -1,6 +1,8 @@
-[![Build Status](https://secure.travis-ci.org/fgnass/node-dev.png)](http://travis-ci.org/fgnass/node-dev)
+# node-dev
 
-### node-dev (1)
+[![GitHub license](https://img.shields.io/github/license/Liquid-JS/node-dev.svg)](https://github.com/Liquid-JS/node-dev/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/dm/@liquid-js/node-dev.svg)](https://www.npmjs.com/package/@liquid-js/node-dev)
+[![scope](https://img.shields.io/npm/v/@liquid-js/node-dev.svg)](https://www.npmjs.com/package/@liquid-js/node-dev)
 
 Node-dev is a development tool for [Node.js](http://nodejs.org) that
 automatically restarts the node process when a file is modified.
@@ -11,19 +13,25 @@ This means that you don't have to configure any include- or exclude rules. If yo
 
 This also means that you **don't have to** configure any file extensions. Just require a `.json` file or a `.ts` script for example and it will be watched. Automatically.
 
-# Usage
+## Installation
+
+`node-dev` can be installed via `npm`. Installing it with the `-g` option will allow you to use it anywhere you would use `node`.
+
+    npm install -g @liquid-js/node-dev
+
+## Usage
 
 Just run `node-dev` as you would normally run `node`:
 
     node-dev server.js
 
-## TypeScript support
+### TypeScript support
 
 You can use node-dev to watch and restart TypeScript projects. Install [ts-node-maintained](https://www.npmjs.com/package/ts-node-maintained) as dev-dependency, then use node-dev to run your script:
 
     node-dev src/server.ts
 
-## Command-line options
+### Command-line options
 
 There are a couple of command-line options that can be used to control which files are watched and what happens when they change:
 
@@ -45,19 +53,13 @@ There are a couple of command-line options that can be used to control which fil
 -   `--timestamp` - The timestamp format to use for logging restarts
 -   `--vm` - Load files using Node's VM
 
-## Passing arguments to node
+### Passing arguments to node
 
 All command-line arguments that are not `node-dev` options are passed on to the `node` process.
 
 Please note: you may need to separate your script from other command line options with `--`, for example:
 
 `node-dev --some-node-args -- my-script.js`
-
-# Installation
-
-`node-dev` can be installed via `npm`. Installing it with the `-g` option will allow you to use it anywhere you would use `node`.
-
-    npm install -g node-dev
 
 ### Desktop Notifications
 
@@ -74,7 +76,7 @@ Status and error messages can be displayed as desktop notification using
 -   Linux: `notify-osd` or `libnotify-bin` installed (Ubuntu should have this by default)
 -   Windows: >= 8, or task bar balloons for Windows &lt; 8
 
-# Config file
+## Config file
 
 Upon startup node-dev looks for a `.node-dev.json` file in the following directories:
 
@@ -84,7 +86,7 @@ Upon startup node-dev looks for a `.node-dev.json` file in the following directo
 
 Settings found later in the list will overwrite previous options.
 
-## Configuration options
+### Configuration options
 
 Usually node-dev doesn't require any configuration at all, but there are some options you can set to tweak its behaviour:
 
@@ -100,15 +102,15 @@ Usually node-dev doesn't require any configuration at all, but there are some op
 -   `timestamp` -- The timestamp format to use for logging restarts. _Default:_ `"HH:MM:ss"`
 -   `vm` -- Whether to watch files loaded via Node's [VM](http://nodejs.org/docs/latest/api/vm.html) module. _Default:_ `true`
 
-### ESModules
+#### ESModules
 
 When using ESModule syntax and `.mjs` files, `node-dev` will automatically use a loader to know which files to watch.
 
-### Dedupe linked modules
+#### Dedupe linked modules
 
 Sometimes you need to make sure that multiple modules get _exactly the same instance_ of a common (peer-) dependency. This can usually be achieved by running `npm dedupe` -- however this doesn't work when you try to `npm link` a dependency (which is quite common during development). Therefore `node-dev` provides a `--dedupe` switch that will inject the [dynamic-dedupe](https://www.npmjs.org/package/dynamic-dedupe) module into your app.
 
-### Transpilers
+#### Transpilers
 
 You can use `node-dev` to run transpiled languages like TypeScript. You can either use a `.js` file as entry point to your application that registers your transpiler as a require-extension manually, for example by calling `CoffeeScript.register()` or you can let node-dev do this for you.
 
@@ -139,7 +141,7 @@ Options can be passed to a transpiler by providing an object containing `name` a
 }
 ```
 
-### Graceful restarts
+#### Graceful restarts
 
 Node-dev sends a `SIGTERM` signal to the child-process if a restart is required. If your app is not listening for these signals `process.exit(0)` will be called immediately. If a listener is registered, node-dev assumes that your app will exit on its own once it is ready.
 
@@ -155,7 +157,7 @@ process.on('message', function (msg) {
 });
 ```
 
-### Ignore paths
+#### Ignore paths
 
 If you'd like to ignore certain paths or files from triggering a restart, list them in the `.node-dev.json` configuration under `"ignore"` like this:
 
@@ -169,4 +171,4 @@ This can be useful when you are running an isomorphic web app that shares module
 
 ## License
 
-MIT
+[MIT License](https://github.com/Liquid-JS/node-dev/blob/master/LICENSE)

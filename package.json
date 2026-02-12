@@ -3,14 +3,10 @@
     "version": "8.0.0",
     "description": "Restarts your app when files are modified",
     "main": "./lib",
-    "contributors": [
-        "Daniel Gasienica <daniel@gasienica.ch> (https://github.com/gasi)",
-        "Bjorn Stromberg <bjorn@bjornstar.com> (https://bjornstar.com)"
-    ],
     "engines": {
         "node": ">=20"
     },
-    "bin": "bin/node-dev.js",
+    "bin": "lib/entrypoint.js",
     "files": [
         "lib"
     ],
@@ -25,9 +21,13 @@
         "semver": "^7.7.4"
     },
     "devDependencies": {
+        "@commitlint/cli": "^20.4.1",
+        "@commitlint/config-conventional": "^20.4.1",
         "@stylistic/eslint-plugin": "^5.8.0",
         "@types/node": "^20.0.0",
         "@typescript-eslint/eslint-plugin": "^8.55.0",
+        "clean-package": "^2.2.0",
+        "commit-and-tag-version": "^12.6.1",
         "eslint": "<10.0.0",
         "eslint-plugin-import": "^2.32.0",
         "eslint-plugin-jsdoc": "^62.5.4",
@@ -39,7 +39,7 @@
         "tap-xunit": "^2.4.1",
         "touch": "^3.1.1",
         "ts-node-maintained": "^10.9.6",
-        "typescript": "<5.0.0",
+        "typescript": "^5.9.3",
         "typescript-eslint": "^8.55.0"
     },
     "scripts": {
@@ -61,7 +61,7 @@
         "monitor",
         "watch"
     ],
-    "author": "Felix Gnass <fgnass@gmail.com> (https://github.com/fgnass)",
+    "author": "HitkoDev <development@hitko.si>",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/Liquid-JS/node-dev/issues"
