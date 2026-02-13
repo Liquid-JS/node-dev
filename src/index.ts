@@ -93,7 +93,7 @@ module.exports = (script, scriptArgs, nodeArgs, {
 
         const loaderName = semver.satisfies(process.version, '>=16.12.0') ? 'load' : 'get-format'
 
-        const loaderURL = pathToFileURL(resolveMain(localPath(join('loaders', `${loaderName}.mjs`))))
+        const loaderURL = pathToFileURL(resolveMain(localPath(join('loaders', `${loaderName}.ts`))))
 
         if (!semver.satisfies(process.version, '>=21.0.0')) {
             args.push(`--experimental-loader=${loaderURL.href}`)

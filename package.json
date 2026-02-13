@@ -2,7 +2,9 @@
     "name": "@liquid-js/node-dev",
     "version": "9.0.0",
     "description": "Restarts your app when files are modified",
-    "main": "./lib",
+    "type": "module",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
     "engines": {
         "node": ">=20"
     },
@@ -11,7 +13,7 @@
         "lib"
     ],
     "dependencies": {
-        "dateformat": "<5.0.0",
+        "dateformat": "^5.0.3",
         "dynamic-dedupe": "^0.3.0",
         "filewatcher": "^3.0.1",
         "get-package-type": "^0.1.0",
@@ -35,6 +37,7 @@
         "eslint-plugin-unused-imports": "^4.4.1",
         "husky": "^9.1.7",
         "npm-check-updates": "^19.3.2",
+        "rimraf": "^6.1.2",
         "tap": "^21.5.1",
         "tap-xunit": "^2.4.1",
         "touch": "^3.1.1",
@@ -43,6 +46,7 @@
         "typescript-eslint": "^8.55.0"
     },
     "scripts": {
+        "build": "rimraf lib && tsc -p tsconfig.lib.json",
         "test": "node test",
         "lint": "eslint . --fix",
         "prepare": "husky",

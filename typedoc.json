@@ -1,0 +1,16 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "entryPoints": [
+        "./src/index.ts",
+        "./src/tools/browser-utils.ts",
+        "./src/tools/browser-image-tools.ts",
+        "./src/plugins/utils.ts",
+        "./src/plugins/border.ts"
+    ],
+    "out": "docs",
+    "sort": [
+        "kind",
+        "instance-first",
+        "source-order"
+    ]
+}

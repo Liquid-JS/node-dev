@@ -89,7 +89,7 @@ if (semver.satisfies(process.version, '>=21.0.0')) {
         })
         .unref()
 
-    register('./loaders/load.mjs', {
+    register('./loaders/load.ts', {
         parentURL: pathToFileURL(__filename),
         data: { port: port2 },
         transferList: [port2]

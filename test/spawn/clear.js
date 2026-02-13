@@ -2,7 +2,7 @@ const tap = require('tap')
 
 const { spawn, touchFile } = require('../utils')
 
-const { control } = require('../../lib/clear')
+const { control } = require('../../src/clear')
 
 const reClear = new RegExp(control)
 

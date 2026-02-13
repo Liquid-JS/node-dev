@@ -1,7 +1,7 @@
 import { createRequire } from 'module'
 import { fileURLToPath } from 'url'
 import semver from 'semver'
-import { sendPort } from './ipc.mjs'
+import { sendPort } from './ipc.js'
 
 const require = createRequire(import.meta.url)
 

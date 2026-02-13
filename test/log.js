@@ -1,7 +1,7 @@
 const tap = require('tap')
 
-const { defaultConfig } = require('../lib/cfg')
-const logFactory = require('../lib/log')
+const { defaultConfig } = require('../src/cfg')
+const logFactory = require('../src/log')
 
 const noColorCfg = { ...defaultConfig, noColor: true }
 
