@@ -10,10 +10,10 @@ import { parser } from 'typescript-eslint'
 
 export default defineConfig(
     {
-        ignores: ['node_modules', 'coverage', 'docs', '.yarn', '.husky', 'tmp']
+        ignores: ['lib', 'node_modules', 'coverage', 'docs', '.yarn', '.husky', 'tmp']
     },
     {
-        files: ['**/*.ts', '**/*.mjs', '**/*.js'],
+        files: ['**/*.ts', '**/*.js', '**/*.mjs', '**/*.cjs'],
         plugins: {
             // @ts-ignore
             '@typescript-eslint': typescriptEslintPlugin,
@@ -25,7 +25,12 @@ export default defineConfig(
             '@stylistic': stylisticPlugin
         },
         languageOptions: {
-            parser
+            parser,
+            parserOptions: {
+                projectService: {
+                    allowDefaultProject: ['.*']
+                }
+            }
         },
         rules: {
             '@import/no-deprecated': 'warn',
@@ -125,9 +130,23 @@ export default defineConfig(
                 }
             ],
             '@typescript-eslint/naming-convention': 'off',
+            '@typescript-eslint/no-deprecated': ['error', {
+                allow: [
+                    {
+                        from: 'package',
+                        name: ['GlobalPreloadHook'],
+                        package: 'module'
+                    },
+                    {
+                        from: 'lib',
+                        name: ['RequireExtensions']
+                    }
+                ]
+            }],
             '@typescript-eslint/no-empty-function': 'off',
             '@typescript-eslint/no-empty-object-type': 'off',
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-floating-promises': 'error',
             '@typescript-eslint/no-inferrable-types': 'off',
             '@typescript-eslint/no-misused-new': 'error',
             '@typescript-eslint/no-namespace': 'off',
@@ -273,18 +292,20 @@ export default defineConfig(
         }
     },
     {
-        files: ['**/*.test.ts', '**/*.test.mjs', '**/*.config.mjs', '**/*.config.ts', '**/*.config.js', 'test/**/*.js', 'test/**/*.mjs', 'test/**/*.ts'],
+        files: ['**/*.config.js', '**/*.config.ts', '**/*.config.cjs', 'test/**/*.mjs', 'test/**/*.cjs', 'test/**/*.js'],
         rules: {
             '@import/no-extraneous-dependencies': [
                 'error',
                 {
-                    devDependencies: true
+                    devDependencies: true,
+                    packageDir: import.meta.dirname
                 }
-            ]
+            ],
+            '@typescript-eslint/no-floating-promises': 'off'
         }
     },
     {
-        files: ['**/*.js'],
+        files: ['test/**/*.js'],
         rules: {
             '@typescript-eslint/no-require-imports': 'off'
         }

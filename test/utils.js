@@ -1,8 +1,8 @@
-const { spawn } = require('child_process')
-const { join } = require('path')
+const { spawn } = require('node:child_process')
+const { join } = require('node:path')
 const touch = require('touch')
 
-const { control } = require('../src/clear')
+const { control } = require('../lib/clear.cjs')
 
 const bin = join(__dirname, '..', 'lib', 'entrypoint')
 const dir = join(__dirname, 'fixture')

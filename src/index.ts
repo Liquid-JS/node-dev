@@ -1,18 +1,18 @@
-const { fork } = require('child_process')
-const { join } = require('path')
-const { pathToFileURL } = require('url')
-const filewatcher = require('filewatcher')
-const semver = require('semver')
+import { ChildProcess, fork } from 'node:child_process'
+import { join } from 'node:path'
+import { pathToFileURL } from 'node:url'
+import semver from 'semver'
+import { clearFactory } from './clear.cjs'
+import { Options } from './cli.js'
+import { FileWatcher } from './utils/filewatcher.js'
+import { configureDeps, configureIgnore } from './ignore.js'
+import * as ipc from './ipc.cjs'
+import { localPath } from './local-path.js'
+import { logFactory } from './log.js'
+import { notifyFactory } from './notify.js'
+import { resolveMain } from './resolve-main.cjs'
 
-const { clearFactory } = require('./clear')
-const { configureDeps, configureIgnore } = require('./ignore')
-const ipc = require('./ipc')
-const localPath = require('./local-path')
-const logFactory = require('./log')
-const notifyFactory = require('./notify')
-const resolveMain = require('./resolve-main')
-
-module.exports = (script, scriptArgs, nodeArgs, {
+export const dev = (script: string, scriptArgs: string[], nodeArgs: string[], {
     clear,
     debounce,
     dedupe,
@@ -24,7 +24,7 @@ module.exports = (script, scriptArgs, nodeArgs, {
     poll: forcePolling,
     respawn,
     timestamp
-}) => {
+}: Options) => {
     if (!script) {
         console.log('Usage: node-dev [options] script [arguments]\n')
         process.exit(1)
@@ -53,17 +53,18 @@ module.exports = (script, scriptArgs, nodeArgs, {
     // Run ./dedupe.js as preload script
     if (dedupe) process.env.NODE_DEV_PRELOAD = localPath('dedupe')
 
-    const watcher = filewatcher({ debounce, forcePolling, interval })
+    const watcher = new FileWatcher({ debounce, forcePolling, interval })
     let isPaused = false
 
     // The child_process
-    let child
+    let child: (ChildProcess & { respawn?: boolean }) | undefined
 
     watcher.on('change', file => {
+        if (isPaused) return
+        isPaused = true
         clearOutput()
         notify('Restarting', `${file} has been modified`)
         watcher.removeAll()
-        isPaused = true
         if (child) {
             // Child is still running, restart upon exit
             child.on('exit', start)
@@ -89,13 +90,10 @@ module.exports = (script, scriptArgs, nodeArgs, {
 
         const args = nodeArgs.slice()
 
-        args.push(`--require=${resolveMain(localPath('wrap'))}`)
-
-        const loaderName = semver.satisfies(process.version, '>=16.12.0') ? 'load' : 'get-format'
-
-        const loaderURL = pathToFileURL(resolveMain(localPath(join('loaders', `${loaderName}.ts`))))
+        args.push(`--require=${resolveMain(localPath('wrap.cjs'))}`)
 
         if (!semver.satisfies(process.version, '>=21.0.0')) {
+            const loaderURL = pathToFileURL(resolveMain(localPath(join('loaders', 'load.js'))))
             args.push(`--experimental-loader=${loaderURL.href}`)
         }
 
@@ -110,8 +108,8 @@ module.exports = (script, scriptArgs, nodeArgs, {
         }
 
         child.once('exit', code => {
-            if (!child.respawn) process.exit(code)
-            child.removeAllListeners()
+            if (!child!.respawn) process.exit(code)
+            child!.removeAllListeners()
             child = undefined
         })
 
@@ -127,14 +125,14 @@ module.exports = (script, scriptArgs, nodeArgs, {
         })
     }
 
-    function stop(willTerminate) {
-        child.respawn = true
+    function stop(willTerminate?: boolean) {
+        child!.respawn = true
         if (!willTerminate) {
             if (gracefulIPC) {
                 log.info('Sending IPC: ' + JSON.stringify(gracefulIPC))
-                child.send(gracefulIPC)
+                child!.send(gracefulIPC)
             } else {
-                child.kill('SIGTERM')
+                child!.kill('SIGTERM')
             }
         }
     }

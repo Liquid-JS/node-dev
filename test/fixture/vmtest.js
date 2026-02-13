@@ -1,7 +1,7 @@
-const { readFileSync } = require('fs')
-const server = require('http').createServer().listen(0)
-const { join } = require('path')
-const vm = require('vm')
+const { readFileSync } = require('node:fs')
+const server = require('node:http').createServer().listen(0)
+const { join } = require('node:path')
+const vm = require('node:vm')
 
 const file = join(__dirname, 'log.js')
 const str = readFileSync(file, 'utf8')

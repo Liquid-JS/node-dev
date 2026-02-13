@@ -1,9 +1,9 @@
-const { existsSync, readFileSync } = require('fs')
-const { dirname, resolve } = require('path')
+import { existsSync, readFileSync } from 'fs'
+import { dirname, resolve } from 'path'
+import { type Options } from './cli.js'
+import { resolveMain } from './resolve-main.cjs'
 
-const resolveMain = require('./resolve-main')
-
-const defaultConfig = {
+const defaultConfig: Options = {
     clear: false,
     debounce: 10,
     dedupe: false,
@@ -24,24 +24,24 @@ const defaultConfig = {
     vm: true
 }
 
-function read(dir) {
+function read(dir: string) {
     const f = resolve(dir, '.node-dev.json')
-    return existsSync(f) ? JSON.parse(readFileSync(f)) : {}
+    return existsSync(f) ? JSON.parse(readFileSync(f, 'utf-8')) : {}
 }
 
-function getConfig(script) {
+function getConfig(script: string) {
     const main = resolveMain(script)
     const dir = main ? dirname(main) : '.'
 
     return Object.assign(
         defaultConfig,
-        read(process.env.HOME || process.env.USERPROFILE),
+        read((process.env.HOME || process.env.USERPROFILE)!),
         read(process.cwd()),
         read(dir)
     )
 }
 
-module.exports = {
+export {
     defaultConfig,
     getConfig
 }

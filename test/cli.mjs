@@ -1,11 +1,11 @@
-const tap = require('tap')
+import tap from 'tap'
 
-const cli = require('../src/cli.js')
+import { cli } from '../lib/cli.js'
 
 tap.test('notify is enabled by default', t => {
     const {
         opts: { notify }
-    } = cli(['node', 'lib/entrypoint.js', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', 'test/index.mjs'])
 
     t.equal(notify, true)
     t.end()
@@ -14,7 +14,7 @@ tap.test('notify is enabled by default', t => {
 tap.test('--no-notify', t => {
     const {
         opts: { notify }
-    } = cli(['node', 'lib/entrypoint.js', '--no-notify', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--no-notify', 'test/index.mjs'])
 
     t.equal(notify, false)
     t.end()
@@ -23,7 +23,7 @@ tap.test('--no-notify', t => {
 tap.test('--notify=false', t => {
     const {
         opts: { notify }
-    } = cli(['node', 'lib/entrypoint.js', '--notify=false', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--notify=false', 'test/index.mjs'])
 
     t.equal(notify, false)
     t.end()
@@ -32,7 +32,7 @@ tap.test('--notify=false', t => {
 tap.test('--notify', t => {
     const {
         opts: { notify }
-    } = cli(['node', 'lib/entrypoint.js', '--notify', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--notify', 'test/index.mjs'])
 
     t.equal(notify, true)
     t.end()
@@ -41,7 +41,7 @@ tap.test('--notify', t => {
 tap.test('--notify=true', t => {
     const {
         opts: { notify }
-    } = cli(['node', 'lib/entrypoint.js', '--notify=true', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--notify=true', 'test/index.mjs'])
 
     t.equal(notify, true)
     t.end()
@@ -87,7 +87,7 @@ tap.test('--expose_gc gc.js foo', t => {
 })
 
 tap.test('--preserve-symlinks test', t => {
-    const argv = 'node lib/entrypoint.js --preserve-symlinks test'.split(' ')
+    const argv = 'node lib/entrypoint.js --preserve-symlinks test/index.mjs'.split(' ')
     const { nodeArgs } = cli(argv)
     t.same(nodeArgs, ['--preserve-symlinks'])
     t.end()
@@ -96,7 +96,7 @@ tap.test('--preserve-symlinks test', t => {
 tap.test('clear is not enabled by default', t => {
     const {
         opts: { clear }
-    } = cli(['node', 'lib/entrypoint.js', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', 'test/index.mjs'])
 
     t.notOk(clear)
     t.end()
@@ -105,7 +105,7 @@ tap.test('clear is not enabled by default', t => {
 tap.test('--clear enables clear', t => {
     const {
         opts: { clear }
-    } = cli(['node', 'lib/entrypoint.js', '--clear', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--clear', 'test/index.mjs'])
 
     t.ok(clear)
     t.end()
@@ -114,7 +114,7 @@ tap.test('--clear enables clear', t => {
 tap.test('interval default', t => {
     const {
         opts: { interval }
-    } = cli(['node', 'lib/entrypoint.js', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', 'test/index.mjs'])
 
     t.equal(interval, 1000)
     t.end()
@@ -123,7 +123,7 @@ tap.test('interval default', t => {
 tap.test('--interval=2000', t => {
     const {
         opts: { interval }
-    } = cli(['node', 'lib/entrypoint.js', '--interval=2000', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--interval=2000', 'test/index.mjs'])
 
     t.equal(interval, 2000)
     t.end()
@@ -132,7 +132,7 @@ tap.test('--interval=2000', t => {
 tap.test('debounce default', t => {
     const {
         opts: { debounce }
-    } = cli(['node', 'lib/entrypoint.js', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', 'test/index.mjs'])
 
     t.equal(debounce, 10)
     t.end()
@@ -141,7 +141,7 @@ tap.test('debounce default', t => {
 tap.test('--debounce=2000', t => {
     const {
         opts: { debounce }
-    } = cli(['node', 'lib/entrypoint.js', '--debounce=2000', 'test'])
+    } = cli(['node', 'lib/entrypoint.js', '--debounce=2000', 'test/index.mjs'])
 
     t.equal(debounce, 2000)
     t.end()
@@ -153,7 +153,7 @@ tap.test('--require source-map-support/register', t => {
         'lib/entrypoint.js',
         '--require',
         'source-map-support/register',
-        'test'
+        'test/index.mjs'
     ])
 
     t.same(nodeArgs, ['--require=source-map-support/register'])
@@ -165,7 +165,7 @@ tap.test('--require=source-map-support/register', t => {
         'node',
         'lib/entrypoint.js',
         '--require=source-map-support/register',
-        'test'
+        'test/index.mjs'
     ])
 
     t.same(nodeArgs, ['--require=source-map-support/register'])
@@ -173,35 +173,35 @@ tap.test('--require=source-map-support/register', t => {
 })
 
 tap.test('-r source-map-support/register', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-r', 'source-map-support/register', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-r', 'source-map-support/register', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--require=source-map-support/register'])
     t.end()
 })
 
 tap.test('-r=source-map-support/register', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-r=source-map-support/register', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-r=source-map-support/register', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--require=source-map-support/register'])
     t.end()
 })
 
 tap.test('--inspect=127.0.0.1:12345', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--inspect=127.0.0.1:12345', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--inspect=127.0.0.1:12345', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--inspect=127.0.0.1:12345'])
     t.end()
 })
 
 tap.test('--inspect', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--inspect', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--inspect', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--inspect'])
     t.end()
 })
 
 tap.test('--no-warnings', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--no-warnings', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--no-warnings', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--no-warnings'])
     t.end()
@@ -215,7 +215,7 @@ tap.test('--require source-map-support/register --require ts-node-maintained/reg
         'source-map-support/register',
         '--require',
         'ts-node-maintained/register',
-        'test'
+        'test/index.mjs'
     ])
 
     t.same(nodeArgs, ['--require=source-map-support/register', '--require=ts-node-maintained/register'])
@@ -244,7 +244,7 @@ tap.test('An unknown argument with a value instead of a script should fail.', t 
 })
 
 tap.test('An unknown argument with a value', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--unknown-arg=value', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--unknown-arg=value', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--unknown-arg=value'])
     t.end()
@@ -252,47 +252,47 @@ tap.test('An unknown argument with a value', t => {
 
 tap.test('An unknown argument without a value can use -- to delimit', t => {
     // use -- to delimit the end of options
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--unknown-arg', '--', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '--unknown-arg', '--', 'test/index.mjs'])
 
     t.same(nodeArgs, ['--unknown-arg'])
     t.end()
 })
 
 tap.test('Single dash with value', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', 'value', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', 'value', 'test/index.mjs'])
 
     t.same(nodeArgs, ['-u=value'])
     t.end()
 })
 
 tap.test('Single dash with = and value', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u=value', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u=value', 'test/index.mjs'])
 
     t.same(nodeArgs, ['-u=value'])
     t.end()
 })
 
 tap.test('Single dash without value should fail', t => {
-    t.throws(() => cli(['node', 'lib/entrypoint.js', '-u', 'test']))
+    t.throws(() => cli(['node', 'lib/entrypoint.js', '-u', 'test/index.mjs']))
     t.end()
 })
 
 tap.test('Single dash without value can use -- to delimit', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', '--', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', '--', 'test/index.mjs'])
 
     t.same(nodeArgs, ['-u'])
     t.end()
 })
 
 tap.test('Repeated single dash', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u=value1', '-u=value2', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u=value1', '-u=value2', 'test/index.mjs'])
 
     t.same(nodeArgs, ['-u=value1', '-u=value2'])
     t.end()
 })
 
 tap.test('Repeated single dash without =', t => {
-    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', 'value1', '-u', 'value2', 'test'])
+    const { nodeArgs } = cli(['node', 'lib/entrypoint.js', '-u', 'value1', '-u', 'value2', 'test/index.mjs'])
 
     t.same(nodeArgs, ['-u=value1', '-u=value2'])
     t.end()
@@ -304,7 +304,7 @@ tap.test(
         // Everything except clear gets passed to node.
         // Don't forget to use -- to delimit!
         const argv =
-            'node lib/entrypoint.js --all --command-line --arguments --clear --that --are --not --node-dev --options -- test'.split(
+            'node lib/entrypoint.js --all --command-line --arguments --clear --that --are --not --node-dev --options -- test/index.mjs'.split(
                 ' '
             )
         const { nodeArgs } = cli(argv)

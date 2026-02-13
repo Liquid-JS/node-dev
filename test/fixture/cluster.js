@@ -1,4 +1,4 @@
-const { disconnect, fork, isMaster, isWorker } = require('cluster')
+const { disconnect, fork, isMaster, isWorker } = require('node:cluster')
 
 const createWorker = i => {
     const worker = fork()

@@ -10,12 +10,12 @@
     },
     "bin": "lib/entrypoint.js",
     "files": [
-        "lib"
+        "lib",
+        "icons"
     ],
     "dependencies": {
         "dateformat": "^5.0.3",
-        "dynamic-dedupe": "^0.3.0",
-        "filewatcher": "^3.0.1",
+        "debounce": "^3.0.0",
         "get-package-type": "^0.1.0",
         "minimist": "^1.2.8",
         "node-notifier": "^10.0.1",
@@ -26,7 +26,12 @@
         "@commitlint/cli": "^20.4.1",
         "@commitlint/config-conventional": "^20.4.1",
         "@stylistic/eslint-plugin": "^5.8.0",
+        "@types/dateformat": "^5.0.3",
+        "@types/get-package-type": "^0.1.0",
         "@types/node": "^20.0.0",
+        "@types/node-notifier": "^8.0.5",
+        "@types/resolve": "^1.20.6",
+        "@types/semver": "^7.7.1",
         "@typescript-eslint/eslint-plugin": "^8.55.0",
         "clean-package": "^2.2.0",
         "commit-and-tag-version": "^12.6.1",
@@ -39,7 +44,6 @@
         "npm-check-updates": "^19.3.2",
         "rimraf": "^6.1.2",
         "tap": "^21.5.1",
-        "tap-xunit": "^2.4.1",
         "touch": "^3.1.1",
         "ts-node-maintained": "^10.9.6",
         "typescript": "^5.9.3",
@@ -47,8 +51,9 @@
     },
     "scripts": {
         "build": "rimraf lib && tsc -p tsconfig.lib.json",
-        "test": "node test",
+        "test": "node test/index.mjs",
         "lint": "eslint . --fix",
+        "prepublishOnly": "npm run build",
         "prepare": "husky",
         "release": "git diff --exit-code && commit-and-tag-version && git push --follow-tags origin",
         "prepack": "clean-package",

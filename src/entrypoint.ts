@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const cli = require('./cli')
-const dev = require('.')
+import { cli } from './cli.js'
+import { dev } from './index.js'
 
 const {
     script,

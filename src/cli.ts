@@ -1,13 +1,12 @@
-const assert = require('assert')
-const { resolve } = require('path')
-const minimist = require('minimist')
+import assert from 'node:assert'
+import { resolve } from 'node:path'
+import minimist, { ParsedArgs } from 'minimist'
+import { getConfig } from './cfg.cjs'
 
-const { getConfig } = require('./cfg')
+const arrayify = <T>(v: T | T[]) => (Array.isArray(v) ? [...v] : [v])
+const argify = (key: string) => ({ arg: `--${key}`, key })
 
-const arrayify = v => (Array.isArray(v) ? [...v] : [v])
-const argify = key => ({ arg: `--${key}`, key })
-
-const resolvePath = p => resolve(process.cwd(), p)
+const resolvePath = (p: string) => resolve(process.cwd(), p)
 
 const nodeAlias = { require: 'r' }
 const nodeBoolean = ['expose_gc', 'preserve-symlinks']
@@ -23,8 +22,8 @@ const boolean = [...nodeBoolean, ...nodeDevBoolean]
 const string = [...nodeString, ...nodeDevString]
 
 const nodeArgsReducer =
-    opts =>
-        (out, { arg, key }) => {
+    (opts: ParsedArgs) =>
+        (out: string[], { arg, key }: { arg: string, key: string }) => {
             const value = opts[key]
 
             if (typeof value === 'boolean') {
@@ -44,22 +43,40 @@ const nodeArgsReducer =
             return out
         }
 
-const nodeCustomFactory = args => arg => {
+const nodeCustomFactory = (args: any[]) => (arg: string) => {
     const isNodeCustom = nodeCustom.includes(arg.substring(2))
     if (isNodeCustom) args.push(arg)
     return !isNodeCustom
 }
 
-const unknownFactory = args => arg => {
+const unknownFactory = (args: Array<{ arg: string, key: string }>) => (arg: string) => {
     const [, key] = Object.keys(minimist([arg]))
     key && !nodeDevNumber.includes(key) && args.push({ arg, key })
+    return true
 }
 
-module.exports = argv => {
-    const nodeCustomArgs = []
+export interface Options {
+    clear: boolean
+    dedupe: boolean
+    fork: boolean
+    notify: boolean
+    poll: boolean
+    respawn: boolean
+    vm: boolean
+    debounce: number
+    deps: number
+    extensions: Record<string, string>
+    graceful_ipc: string
+    ignore: string[]
+    interval: number
+    timestamp: string
+}
+
+export const cli = (argv: string[]) => {
+    const nodeCustomArgs = new Array<string>()
     const args = argv.slice(2).filter(nodeCustomFactory(nodeCustomArgs))
 
-    const unknownArgs = []
+    const unknownArgs = new Array<{ arg: string, key: string }>()
     const unknown = unknownFactory(unknownArgs)
 
     const {
@@ -70,10 +87,10 @@ module.exports = argv => {
 
     const opts = minimist(args, { alias, boolean, default: getConfig(script) })
     const nodeArgs = [...nodeBoolean.map(argify), ...nodeString.map(argify), ...unknownArgs]
-        .sort((a, b) => a.key - b.key)
+        .sort((a, b) => parseFloat(a.key) - parseFloat(b.key))
         .reduce(nodeArgsReducer(opts), [...nodeCustomArgs])
 
     opts.ignore = arrayify(opts.ignore).map(resolvePath)
 
-    return { nodeArgs, opts, script, scriptArgs }
+    return { nodeArgs, opts: opts as any as Options, script, scriptArgs }
 }

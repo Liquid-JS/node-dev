@@ -1,11 +1,11 @@
-const notifier = require('node-notifier')
+import notifier from 'node-notifier'
+import { localPath } from './local-path.js'
+import { Log } from './log.js'
 
-const localPath = require('./local-path')
-
-const iconLevelPath = level => localPath(`../icons/node_${level}.png`)
+const iconLevelPath = (level: 'error' | 'info') => localPath(`../icons/node_${level}.png`)
 
 // Writes a message to the console and optionally displays a desktop notification.
-module.exports = (notifyEnabled, log) => (title = 'node-dev', message, level = 'info') => {
+export const notifyFactory = (notifyEnabled: boolean, log: Log) => (title = 'node-dev', message: any, level: 'error' | 'info' = 'info') => {
     log[level](`${title}: ${message}`)
 
     if (notifyEnabled) {
