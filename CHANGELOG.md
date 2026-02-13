@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [10.0.0-0](https://github.com/Liquid-JS/node-dev/compare/v9.0.0...v10.0.0-0) (2026-02-13)
+
+
+### Features
+
+* add kill timeout ([98d5e18](https://github.com/Liquid-JS/node-dev/commit/98d5e18121ec02feb936480594553661f1cdb0f0))
+* typescript types ([8682363](https://github.com/Liquid-JS/node-dev/commit/868236371a51b30e55807613af1e846f8b9863f7))
+
 ## [9.0.0](https://github.com/Liquid-JS/node-dev/compare/v8.0.0...v9.0.0) (2026-02-12)
 
 
