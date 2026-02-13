@@ -1,6 +1,7 @@
 import { ChildProcess, fork } from 'node:child_process'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { clearTimeout } from 'node:timers'
 import semver from 'semver'
 import { clearFactory } from './clear.cjs'
 import { Options } from './cli.js'
@@ -23,7 +24,8 @@ export const dev = (script: string, scriptArgs: string[], nodeArgs: string[], {
     notify: notifyEnabled,
     poll: forcePolling,
     respawn,
-    timestamp
+    timestamp,
+    kill_timeout: killTimeout
 }: Options) => {
     if (!script) {
         console.log('Usage: node-dev [options] script [arguments]\n')
@@ -55,6 +57,7 @@ export const dev = (script: string, scriptArgs: string[], nodeArgs: string[], {
 
     const watcher = new FileWatcher({ debounce, forcePolling, interval })
     let isPaused = false
+    let killTimer: NodeJS.Timeout | undefined
 
     // The child_process
     let child: (ChildProcess & { respawn?: boolean }) | undefined
@@ -87,6 +90,8 @@ export const dev = (script: string, scriptArgs: string[], nodeArgs: string[], {
      */
     function start() {
         isPaused = false
+        if (killTimer)
+            clearTimeout(killTimer)
 
         const args = nodeArgs.slice()
 
@@ -128,6 +133,12 @@ export const dev = (script: string, scriptArgs: string[], nodeArgs: string[], {
     function stop(willTerminate?: boolean) {
         child!.respawn = true
         if (!willTerminate) {
+            if (typeof killTimeout === 'number') {
+                killTimer = setTimeout(() => {
+                    log.warn('Sending SIGKILL after timeout (%s ms)', killTimeout)
+                    child?.kill('SIGKILL')
+                }, killTimeout)
+            }
             if (gracefulIPC) {
                 log.info('Sending IPC: ' + JSON.stringify(gracefulIPC))
                 child!.send(gracefulIPC)

@@ -51,6 +51,7 @@ There are a couple of command-line options that can be used to control which fil
 -   `--poll` - Force polling for file changes (Caution! CPU-heavy!)
 -   `--respawn` - Keep watching for changes after the script has exited
 -   `--timestamp` - The timestamp format to use for logging restarts
+-   `--kill_timeout` - Time in milliseconds to wait before force killing a stuck child process on reload
 -   `--vm` - Load files using Node's VM
 
 ### Passing arguments to node

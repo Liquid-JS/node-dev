@@ -21,6 +21,7 @@ const defaultConfig: Options = {
     poll: false,
     respawn: false,
     timestamp: 'HH:MM:ss',
+    kill_timeout: undefined,
     vm: true
 }
 

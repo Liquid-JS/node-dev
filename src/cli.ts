@@ -14,7 +14,7 @@ const nodeCustom = ['inspect', 'inspect-brk', 'no-warnings']
 const nodeString = ['require']
 
 const nodeDevBoolean = ['clear', 'dedupe', 'fork', 'notify', 'poll', 'respawn', 'vm']
-const nodeDevNumber = ['debounce', 'deps', 'interval']
+const nodeDevNumber = ['debounce', 'deps', 'interval', 'kill_timeout']
 const nodeDevString = ['graceful_ipc', 'ignore', 'timestamp']
 
 const alias = { ...nodeAlias }
@@ -70,6 +70,7 @@ export interface Options {
     ignore: string[]
     interval: number
     timestamp: string
+    kill_timeout?: number
 }
 
 export const cli = (argv: string[]) => {
